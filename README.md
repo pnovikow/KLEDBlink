@@ -7,9 +7,9 @@ _sysfs_.
 
 Запускается так:
 
-> su -
-> ./blink.sh 
+> su -    
+> ./blink.sh     
 
 Для просмотра справки запустить так:
 
-> ./blink.sh --help
+> ./blink.sh --help    
