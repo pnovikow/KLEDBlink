@@ -3,7 +3,7 @@
 
 one ()
 {
-    for d in "${leds[@]}"; do
+    for d in "${ctrl_led[@]}"; do 
         echo 1 > $d
         sleep $sleep_time
         echo 0 > $d
@@ -12,12 +12,12 @@ one ()
 
 two ()
 {
-    for d in "${leds[@]}"; do
+    for d in "${ctrl_led[@]}"; do
         echo 1 > $d
         sleep $sleep_time
     done
 
-    for d in "${leds[@]}"; do
+    for d in "${ctrl_led[@]}"; do
         echo 0 > $d
         sleep $sleep_time
     done
@@ -25,44 +25,19 @@ two ()
 
 three ()
 {
-
-    for d in "${leds_back[@]}"; do
+    for d in "${ctrl_led[@]}"; do
         echo 1 > $d
         sleep $sleep_time
     done
 
-    for d in "${leds_back[@]}"; do
+    for d in "${ctrl_led[@]}"; do
         echo 0 > $d
         sleep $sleep_time
     done
 }
 
-four ()
+rand ()
 {
-    for d in "${leds[@]}"; do
-        echo 1 > $d
+        echo $(( ( RANDOM % 2 ) )) > "${ctrl_led[$(( ( RANDOM % $number_of_leds ) ))]}"
         sleep $sleep_time
-    done
-
-    for d in "${leds[@]}"; do
-        echo 0 > $d
-        sleep $sleep_time
-    done
-    
-        for d in "${leds_back[@]}"; do
-        echo 1 > $d
-        sleep $sleep_time
-    done
-
-    for d in "${leds_back[@]}"; do
-        echo 0 > $d
-        sleep $sleep_time
-    done
-}
-
-five ()
-{
-    echo $(( ( RANDOM % 2 ) )) > "${leds[$(( ( RANDOM % 3 ) ))]}"
-    sleep $sleep_time
-
 }

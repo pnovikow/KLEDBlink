@@ -1,15 +1,25 @@
 #!/bin/bash
 
-num=/sys/class/leds/input0\:\:numlock/brightness
-caps=/sys/class/leds/input0\:\:capslock/brightness
-scroll=/sys/class/leds/input0\:\:scrolllock/brightness
-caps_lock_state=$(cat $caps)
-scroll_lock_state=$(cat $scroll)
-num_lock_state=$(cat $num)
+for d in "${ctrl_led[@]}"; do 
+    start_state+=( $(cat $d) )
+done
+
+number_of_leds=$(cd /sys/class/leds; ls -d */ | wc -l)
+
+dirled=$(cd /sys/class/leds/; ls -d */)
+delrid=$(echo $dirled | tac --regex --separator="\s")
+ctrl_led=($(echo $dirled | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
+ctrl_led_back=($(echo $delrid | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
+#for d in $dirled; do ls $(echo $pref$d); done
+ #echo $dirled | sed 's/\(input\)/\/sys\/class\/leds\/\1/g' | xargs -n1 ls
+
+
 state=0
 
 leds=( "$num" "$caps" "$scroll" ) 
 leds_back=( "$scroll" "$caps" "$num" ) 
+animations=( "one" "two" "three" "rand" )
+number_animation=${#animations[@]}
 
 source "sh/animations.sh"
 
@@ -32,12 +42,10 @@ fi
 exit_func () 
 {
     echo -e $FONT_COLOR_RED"\nПерехвачен CTRL+C. Скрипт остановлен\n"$FONT_NORMAL
-    echo $num_lock_state > /sys/class/leds/input0\:\:numlock/brightness
-    sleep $sleep_time
-    echo  $caps_lock_state > /sys/class/leds/input0\:\:capslock/brightness
-    sleep $sleep_time
-    echo $scroll_lock_state > /sys/class/leds/input0\:\:scrolllock/brightness
-    sleep $sleep_time
+    exit 0
+    for d in ${!ctrl_led[*]}; do
+        echo "${start_state[$d]}" > "${ctrl_led[$d]}"
+    done
     exit 0
 }
 
@@ -46,7 +54,7 @@ switch ()
 {
 if [ $state -eq 0 ];then
     state=1
-    elif [ $state -gt 0 -a $state -lt 4 ]; then 
+    elif [ $state -gt 0 -a $state -lt $number_animation ]; then 
         ((state++))
     else state=0
 fi
@@ -60,25 +68,8 @@ trap switch SIGQUIT
 
 while true; do 
 
-case $state in
+${animations[$state]}
 
-    0) 
-        one
-        ;;
-    1)
-        two
-        ;;
-    2) 
-        three
-        ;;
-    3) 
-        four
-        ;;
-    4) 
-        five
-        ;;
-esac
-    
 done;
 
 exit 0
