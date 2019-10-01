@@ -10,9 +10,6 @@ dirled=$(cd /sys/class/leds/; ls -d */)
 delrid=$(echo $dirled | tac --regex --separator="\s")
 ctrl_led=($(echo $dirled | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
 ctrl_led_back=($(echo $delrid | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
-#for d in $dirled; do ls $(echo $pref$d); done
- #echo $dirled | sed 's/\(input\)/\/sys\/class\/leds\/\1/g' | xargs -n1 ls
-
 
 state=0
 
@@ -59,6 +56,7 @@ if [ $state -eq 0 ];then
     else state=0
 fi
 }
+
 # Отслеживаем нажатие CTRL+C
 trap exit_func SIGINT
 
