@@ -3,6 +3,9 @@
 #---------------
 # Простой скрипт на bash который мигает светодиодами клавиатуры
 # используя интерфейсы линукс procfs
+#
+# Simple script for blinking with LEDs on keyboards
+# using linux procds intarfaces
 #--------------
 
 for d in "${ctrl_led[@]}"; do 
