@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#---------------
+# Простой скрипт на bash который мигает светодиодами клавиатуры
+# используя интерфейсы линукс procfs
+#--------------
+
 for d in "${ctrl_led[@]}"; do 
   start_state+=( $(cat $d) )
 done
@@ -8,6 +13,7 @@ number_of_leds=$(cd /sys/class/leds; ls -d */ | wc -l)
 
 dirled=$(cd /sys/class/leds/; ls -d */)
 delrid=$(echo $dirled | tac --regex --separator="\s")
+
 ctrl_led=($(echo $dirled | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
 ctrl_led_back=($(echo $delrid | sed 's/\(input\)/\/sys\/class\/leds\/\1/g'  | sed 's/\s/\n/g' | sed 's/\($\)/brightness\1/g'))
 
