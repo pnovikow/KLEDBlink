@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #---------------
-# Простой скрипт на bash который мигает светодиодами клавиатуры
-# используя интерфейсы линукс procfs
+# A simple bash script that flashes keyboard LEDs
+# using linux interfaces procfs
 #
-# Simple script for blinking with LEDs on keyboards
+# Simple script for blinking with LEDs on keyboards leight
 # using linux procds intarfaces
 #--------------
 
