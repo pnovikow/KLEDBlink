@@ -1,21 +1,20 @@
 # Keyboard LEDs Blink
 
-Пустячковый скрип-развлекушка. моргает тремя светодиодами клавиатуры используя 
 
-```
- _sysfs_.
-```
+A trifling creak-entertainment. blinks three keypad LEDs using
+_sysfs_.
 
-Требуются права `root`.
+root permission required.
 
-Запускается так:
+
+Runs like this:
 
 ```
  su -    
  ./blink.sh     
 ```
 
-Для просмотра справки запустить так:
+To view help run like this:
 
 ```
 ./blink.sh --help    
