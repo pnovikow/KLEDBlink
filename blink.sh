@@ -42,7 +42,7 @@ if [ $# != 0 ]; then
   else sleep_time=0.1
 fi
 
-# Функция-обработчик SIGINT
+# function SIGINT
 exit_func ()
 {
   echo -e $FONT_COLOR_RED"\nПерехвачен CTRL+C. Скрипт остановлен\n"$FONT_NORMAL
@@ -53,7 +53,7 @@ exit_func ()
   exit 0
 }
 
-# Функция-обработчик SIGQUIT
+# function SIGQUIT
 switch ()
 {
 if [ $state -eq 0 ];then
@@ -64,10 +64,10 @@ if [ $state -eq 0 ];then
 fi
 }
 
-# Отслеживаем нажатие CTRL+C
+# tracking CTRL+C
 trap exit_func SIGINT
 
-# Отслеживаем нажатие CTRL+\
+# tracking CTRL+\
 
 trap switch SIGQUIT
 
